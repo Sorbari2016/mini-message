@@ -13,7 +13,7 @@
             <div class="message-card">
                 <div class="message-header">
                     <span class="sender-name"><%= message.user %></span>
-                    <span class="message-date"><%= message.added %></span>
+                    <span class="message-date"><%= message.added.toDateString() %></span>
                 </div>
                 <div class="message-body">
                     <p><%= message.text %></p>

@@ -1,12 +1,12 @@
-import * as db from "../routes/indexRouter.js";
+import * as db from "../db.js";
 import { CustomNotFoundError } from "../errors/customNotFoundError.js";
 
-export async function getMessages() {
+export async function getMessages(req, res) {
   const messages = await db.getMessages();
 
   if (!messages.length) {
-    throw new CustomNotFoundError("No message");
+    throw new CustomNotFoundError("No message !");
   }
 
-  return messages;
+  res.render("index", { title: "Mini Messageboard", messages: messages });
 }

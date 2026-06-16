@@ -1,19 +1,9 @@
-// Create in-memory database
-const messages = [
-  {
-    text: "Hi there!",
-    user: "Amando",
-    added: new Date(),
-  },
-  {
-    text: "Hello World!",
-    user: "Charles",
-    added: new Date(),
-  },
-];
+import { Router } from "express";
+import { getMessages } from "../controller/indexController.js";
 
-const getMessages = async () => {
-  return messages;
-};
+// Create index routes
+const indexRouter = Router();
 
-export { getMessages };
+indexRouter.get("/", getMessages);
+
+export { indexRouter };
