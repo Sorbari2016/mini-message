@@ -11,6 +11,8 @@ const __dirname = path.dirname(__filename);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use(express.static("public"));
+
 app.use("/", indexRouter);
 
 app.use((err, req, res, next) => {
