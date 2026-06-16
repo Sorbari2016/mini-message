@@ -11,3 +11,9 @@ const messages = [
     added: new Date(),
   },
 ];
+
+const getMessages = async () => {
+  return messages;
+};
+
+export { getMessages };

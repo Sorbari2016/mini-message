@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%=title %> Project</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <h1><%=title %></h1>
+    <div class="message-container">
+    <% if (locals.messages && messages.length > 0) { %>
+        <% messages.forEach(message => { %>
+            <div class="message-card">
+                <div class="message-header">
+                    <span class="sender-name"><%= message.user %></span>
+                    <span class="message-date"><%= message.added %></span>
+                </div>
+                <div class="message-body">
+                    <p><%= message.text %></p>
+                </div>
+            </div>
+        <% }); %>
+     <%} else { %>
+        <p>No messages yet!</p>
+     <%} %>
+ </div>
+</body>
+</html>
