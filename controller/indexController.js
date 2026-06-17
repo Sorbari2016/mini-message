@@ -15,4 +15,18 @@ function getMessageForm(req, res) {
   res.render("form", { message: "" });
 }
 
-export { getMessageForm, getMessages };
+async function createMessage(req, res) {
+  const messages = await db.getMessages();
+
+  if (!messages.length) {
+    throw new CustomNotFoundError("No messages !");
+  }
+
+  const { messageText, messageUser } = req.body;
+
+  messages.push({ text: messageText, user: messageUser, added: new Date() });
+
+  res.redirect("/");
+}
+
+export { getMessageForm, getMessages, createMessage };
