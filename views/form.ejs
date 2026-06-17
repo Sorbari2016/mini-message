@@ -1,0 +1,20 @@
+<form method="POST" action="/new">
+  <h1>Your message</h1>
+  <input
+    type="text"
+    name="messageUser"
+    value="<%=message.user %>"
+    id="user"
+    placeholder="What's your name ?"
+    required
+  />
+  <input
+    type="text"
+    name="messageText"
+    value="<%=message.text %>"
+    id="message"
+    placeholder="Type in your message..."
+    required
+  />
+  <button type="submit">Send Message</button>
+</form>
