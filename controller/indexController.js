@@ -29,4 +29,18 @@ async function createMessage(req, res) {
   res.redirect("/");
 }
 
-export { getMessageForm, getMessages, createMessage };
+async function getEditMessageForm(req, res) {
+  const messageId = parseInt(req.params.messageId);
+
+  const message = await (
+    await db.getMessages()
+  ).find((msg) => msg.id === messageId);
+
+  if (!message) {
+    throw new CustomNotFoundError("Invalid message !");
+  }
+
+  res.render("form", { message: message });
+}
+
+export { getMessageForm, getMessages, createMessage, getEditMessageForm };

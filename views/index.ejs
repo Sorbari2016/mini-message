@@ -22,6 +22,9 @@
                 <div class="message-body">
                     <p><%= message.text %></p>
                 </div>
+               <div class="message-action">
+                <a href="/<%=message.id%>" class="btn btn-edit">Edit</a>
+               </div> 
             </div>
         <% }); %>
      <%} else { %>
