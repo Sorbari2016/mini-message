@@ -12,7 +12,7 @@ async function getMessages(req, res) {
 }
 
 function getMessageForm(req, res) {
-  res.render("form", { message: "" });
+  res.render("form", { title: "Message Form", message: "" });
 }
 
 async function createMessage(req, res) {
@@ -24,8 +24,16 @@ async function createMessage(req, res) {
 
   const { messageText, messageUser } = req.body;
 
-  messages.push({ text: messageText, user: messageUser, added: new Date() });
+  let lastMessageId = await db.getLastestId();
 
+  messages.push({
+    id: ++lastMessageId,
+    text: messageText,
+    user: messageUser,
+    added: new Date(),
+  });
+
+  console.log(messages);
   res.redirect("/");
 }
 

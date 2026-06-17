@@ -18,4 +18,8 @@ const getMessages = async () => {
   return messages;
 };
 
-export { getMessages };
+const getLastestId = async () => {
+  return messages[messages.length - 1].id;
+};
+
+export { getMessages, getLastestId };
