@@ -8,6 +8,9 @@
   </head>
   <body>
     <h1><%=title %></h1>
+    <div class="new-message">
+        <a href="/new">Create Message</a>
+    </div>
     <div class="message-container">
     <% if (locals.messages && messages.length > 0) { %>
         <% messages.forEach(message => { %>

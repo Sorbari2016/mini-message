@@ -1,7 +1,7 @@
 import * as db from "../db.js";
 import { CustomNotFoundError } from "../errors/customNotFoundError.js";
 
-export async function getMessages(req, res) {
+async function getMessages(req, res) {
   const messages = await db.getMessages();
 
   if (!messages.length) {
@@ -10,3 +10,9 @@ export async function getMessages(req, res) {
 
   res.render("index", { title: "Mini Messageboard", messages: messages });
 }
+
+function getMessageForm(req, res) {
+  res.render("form", { message: "" });
+}
+
+export { getMessageForm, getMessages };
