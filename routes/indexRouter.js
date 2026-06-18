@@ -4,6 +4,7 @@ import {
   getMessageForm,
   createMessage,
   getEditMessageForm,
+  updateMessage,
 } from "../controller/indexController.js";
 
 // Create index routes
@@ -13,5 +14,6 @@ indexRouter.get("/", getMessages);
 indexRouter.get("/new", getMessageForm);
 indexRouter.post("/new", createMessage);
 indexRouter.get("/:messageId", getEditMessageForm);
+indexRouter.post("/:messageId", updateMessage);
 
 export { indexRouter };

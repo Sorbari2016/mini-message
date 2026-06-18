@@ -39,16 +39,47 @@ async function createMessage(req, res) {
 
 async function getEditMessageForm(req, res) {
   const messageId = parseInt(req.params.messageId);
+  console.log(req.path);
 
   const message = await (
     await db.getMessages()
   ).find((msg) => msg.id === messageId);
 
   if (!message) {
-    throw new CustomNotFoundError("Invalid message !");
+    throw new CustomNotFoundError("Message not found !");
   }
 
-  res.render("form", { message: message });
+  res.render("edit", { message: message });
 }
 
-export { getMessageForm, getMessages, createMessage, getEditMessageForm };
+async function updateMessage(req, res) {
+  const messageId = parseInt(req.params.messageId);
+
+  const messages = await db.getMessages();
+
+  const messageIndex = messages.findIndex(
+    (message) => message.id === messageId,
+  );
+
+  if (messageIndex === -1) {
+    return res.status(404).send("Message not found");
+  }
+
+  const { messageUser, messageText } = req.body;
+
+  messages[messageIndex] = {
+    ...messages[messageIndex],
+    user: messageUser,
+    text: messageText,
+  };
+
+  res.redirect("/");
+}
+
+export {
+  getMessageForm,
+  getMessages,
+  createMessage,
+  getEditMessageForm,
+  updateMessage,
+};

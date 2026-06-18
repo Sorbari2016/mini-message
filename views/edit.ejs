@@ -1,11 +1,11 @@
-<form method="POST" action="/new">
+<form method="POST" action="/<%=message.id%>">
   <h1>Your message</h1>
   <div class="form-group">
     <input
       type="text"
       name="messageUser"
+      value="<%=message.user %>"
       id="user"
-      placeholder="What's your name ?"
       required
     />
   </div>
@@ -13,13 +13,13 @@
     <input
       type="text"
       name="messageText"
+      value="<%=message.text %>"
       id="message"
-      placeholder="Type in your message..."
       required
     />
   </div>
   <div class="form-actions">
-    <button type="submit">Send Message</button>
+    <button type="submit">Update Message</button>
     <a href="/" class="btn btn-cancel">Go back</a>
   </div>
 </form>
