@@ -11,8 +11,32 @@ async function getMessages(req, res) {
   res.render("index", { title: "Mini Messageboard", messages: messages });
 }
 
-function getMessageForm(req, res) {
-  res.render("form", { title: "Message Form", message: "" });
+async function getMessageForm(req, res) {
+  if (req.path === "/new") {
+    return res.render("form", {
+      title: "New Message Form",
+      formTitle: "Send a message",
+      actionRoute: "/new",
+      submitText: "Send Message",
+      message: { user: "", text: "" },
+    });
+  }
+
+  const messageId = parseInt(req.params.messageId);
+  const messages = await db.getMessages();
+  const message = messages.find((msg) => msg.id === messageId);
+
+  if (!message) {
+    throw new CustomNotFoundError("Message not found !");
+  }
+
+  return res.render("form", {
+    title: "Edit Message Form",
+    formTitle: "Edit your message",
+    actionRoute: `/${message.id}`,
+    submitText: "Update Message",
+    message: message,
+  });
 }
 
 async function createMessage(req, res) {
@@ -35,21 +59,6 @@ async function createMessage(req, res) {
 
   console.log(messages);
   res.redirect("/");
-}
-
-async function getEditMessageForm(req, res) {
-  const messageId = parseInt(req.params.messageId);
-  console.log(req.path);
-
-  const message = await (
-    await db.getMessages()
-  ).find((msg) => msg.id === messageId);
-
-  if (!message) {
-    throw new CustomNotFoundError("Message not found !");
-  }
-
-  res.render("edit", { message: message });
 }
 
 async function updateMessage(req, res) {
@@ -76,10 +85,4 @@ async function updateMessage(req, res) {
   res.redirect("/");
 }
 
-export {
-  getMessageForm,
-  getMessages,
-  createMessage,
-  getEditMessageForm,
-  updateMessage,
-};
+export { getMessageForm, getMessages, createMessage, updateMessage };

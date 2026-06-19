@@ -3,7 +3,6 @@ import {
   getMessages,
   getMessageForm,
   createMessage,
-  getEditMessageForm,
   updateMessage,
 } from "../controller/indexController.js";
 
@@ -13,7 +12,7 @@ const indexRouter = Router();
 indexRouter.get("/", getMessages);
 indexRouter.get("/new", getMessageForm);
 indexRouter.post("/new", createMessage);
-indexRouter.get("/:messageId", getEditMessageForm);
+indexRouter.get("/:messageId", getMessageForm);
 indexRouter.post("/:messageId", updateMessage);
 
 export { indexRouter };

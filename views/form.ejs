@@ -1,25 +1,38 @@
-<form method="POST" action="/new">
-  <h1>Your message</h1>
-  <div class="form-group">
-    <input
-      type="text"
-      name="messageUser"
-      id="user"
-      placeholder="What's your name ?"
-      required
-    />
-  </div>
-  <div class="form-group">
-    <input
-      type="text"
-      name="messageText"
-      id="message"
-      placeholder="Type in your message..."
-      required
-    />
-  </div>
-  <div class="form-actions">
-    <button type="submit">Send Message</button>
-    <a href="/" class="btn btn-cancel">Go back</a>
-  </div>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%=title %> Project</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body>
+    <form method="POST" action="<%actionRoute %>">
+      <h1><%=formTitle%></h1>
+      <div class="form-group">
+        <input
+          type="text"
+          name="messageUser"
+          value="<%=message.user %>"
+          id="user"
+          required
+          placeholder="Author"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          name="messageText"
+          value="<%=message.text %>"
+          id="message"
+          placeholder="Message"
+          required
+        />
+      </div>
+      <div class="form-actions">
+        <button type="submit"><%=submitText %></button>
+        <a href="/" class="btn btn-cancel">Go back</a>
+      </div>
+    </form>
+  </body>
+</html>
