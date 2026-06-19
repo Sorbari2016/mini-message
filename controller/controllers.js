@@ -60,7 +60,6 @@ async function createMessage(req, res) {
     added: new Date(),
   });
 
-  console.log(messages);
   res.redirect("/");
 }
 
