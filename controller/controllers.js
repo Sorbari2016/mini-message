@@ -33,7 +33,7 @@ async function getMessageForm(req, res) {
   return res.render("form", {
     title: "Edit Message Form",
     formTitle: "Edit your message",
-    actionRoute: `/${message.id}`,
+    actionRoute: `/${message.id}/edit`,
     submitText: "Update Message",
     message: message,
   });

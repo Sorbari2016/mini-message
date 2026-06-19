@@ -4,7 +4,7 @@ import {
   getMessageForm,
   createMessage,
   updateMessage,
-} from "../controller/controller.js";
+} from "../controller/controllers.js";
 
 // Create index routes
 const router = Router();
@@ -12,7 +12,7 @@ const router = Router();
 router.get("/", getMessages);
 router.get("/new", getMessageForm);
 router.post("/new", createMessage);
-router.get("/:messageId", getMessageForm);
-router.post("/:messageId", updateMessage);
+router.get("/:messageId/edit", getMessageForm);
+router.post("/:messageId/edit", updateMessage);
 
 export { router };
