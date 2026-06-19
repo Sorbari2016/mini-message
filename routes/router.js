@@ -4,6 +4,7 @@ import {
   getMessageForm,
   createMessage,
   updateMessage,
+  deleteMessage,
 } from "../controller/controllers.js";
 
 // Create index routes
@@ -14,5 +15,6 @@ router.get("/new", getMessageForm);
 router.post("/new", createMessage);
 router.get("/:messageId/edit", getMessageForm);
 router.post("/:messageId/edit", updateMessage);
+router.post("/:messageId/delete", deleteMessage);
 
 export { router };

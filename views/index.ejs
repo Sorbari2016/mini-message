@@ -22,8 +22,11 @@
                 <div class="message-body">
                     <p><%= message.text %></p>
                 </div>
-               <div class="message-action">
+               <div class="message-actions">
                 <a href="/<%=message.id%>/edit" class="btn btn-edit">Edit</a>
+                <form method="POST" action="/<%= message.id %>/delete" class="delete-form">
+                    <button type="submit" class="btn btn-delete">Delete</button>
+                </form>
                </div> 
             </div>
         <% }); %>

@@ -1,16 +1,18 @@
 import * as db from "../db.js";
 import { CustomNotFoundError } from "../errors/customNotFoundError.js";
 
+// Create controller to get homepage, with all messages
 async function getMessages(req, res) {
   const messages = await db.getMessages();
 
   if (!messages.length) {
-    throw new CustomNotFoundError("No message !");
+    throw new CustomNotFoundError("No message yet!");
   }
 
   res.render("index", { title: "Mini Messageboard", messages: messages });
 }
 
+// Create controller to get either a New or Edit Message form
 async function getMessageForm(req, res) {
   if (req.path === "/new") {
     return res.render("form", {
@@ -22,7 +24,7 @@ async function getMessageForm(req, res) {
     });
   }
 
-  const messageId = parseInt(req.params.messageId);
+  const messageId = parseInt(req.params["messageId"]);
   const messages = await db.getMessages();
   const message = messages.find((msg) => msg.id === messageId);
 
@@ -39,6 +41,7 @@ async function getMessageForm(req, res) {
   });
 }
 
+// Create controller to add a new messasge
 async function createMessage(req, res) {
   const messages = await db.getMessages();
 
@@ -61,6 +64,7 @@ async function createMessage(req, res) {
   res.redirect("/");
 }
 
+// Create a controller to update a message
 async function updateMessage(req, res) {
   const messageId = parseInt(req.params.messageId);
 
@@ -85,4 +89,28 @@ async function updateMessage(req, res) {
   res.redirect("/");
 }
 
-export { getMessageForm, getMessages, createMessage, updateMessage };
+// Create a method to delete a message
+async function deleteMessage(req, res) {
+  const messageId = parseInt(req.params["messageId"]);
+
+  const messages = await db.getMessages();
+
+  const messageIndex = messages.findIndex(
+    (message) => message.id === messageId,
+  );
+
+  if (messageIndex === -1) {
+    return res.status(404).send("Message not found");
+  }
+
+  messages.splice(messageIndex, 1);
+  res.redirect("/");
+}
+
+export {
+  getMessageForm,
+  getMessages,
+  createMessage,
+  updateMessage,
+  deleteMessage,
+};
