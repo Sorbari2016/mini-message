@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
-import { indexRouter } from "./routes/indexRouter.js";
+import { router } from "./routes/router.js";
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.set("view engine", "ejs");
 
 app.use(express.static("public"));
 
-app.use("/", indexRouter);
+app.use("/", router);
 
 app.use((err, req, res, next) => {
   console.error(err);
