@@ -5,4 +5,11 @@ const getAllMessages = async () => {
   return rows;
 };
 
-export { getAllMessages };
+const insertMessage = async (messageText, username) => {
+  await pool.query(
+    "INSERT INTO messages (message_text, username) VALUES($1, $2)",
+    [messageText, username],
+  );
+};
+
+export { getAllMessages, insertMessage };

@@ -244,3 +244,13 @@ form h1 {
 .btn-cancel:hover {
   background-color: #eaeaea;
 }
+
+/* ERROR */
+.error-msg {
+  padding-left: 12px;
+}
+
+.error-list {
+  font-size: 0.833em;
+  color: #d32f2f;
+}

@@ -1,5 +1,6 @@
 import { CustomNotFoundError } from "../errors/customNotFoundError.js";
-import { getAllMessages } from "../db/queries.js";
+import { getAllMessages, insertMessage } from "../db/queries.js";
+import { validationResult, matchedData } from "express-validator";
 
 // Create controller to get homepage, with all messages
 async function getMessages(req, res) {
@@ -43,22 +44,25 @@ async function getMessageForm(req, res) {
 
 // Create controller to add a new messasge
 async function createMessage(req, res) {
-  const messages = await db.getMessages();
+  const errors = validationResult(req); // gather all validation errors
 
-  if (!messages.length) {
-    throw new CustomNotFoundError("No messages !");
+  // Send errors back to user
+  if (!errors.isEmpty()) {
+    return res.status(400).render("form", {
+      title: "New Message Form",
+      formTitle: "Send a message",
+      actionRoute: "/new",
+      submitText: "Send Message",
+      message: { username: "", message_text: "" },
+      errors: errors.array(),
+    });
   }
 
-  const { messageText, messageUser } = req.body;
+  // extracts only the data that has been successfully validated
+  const { messageText, messageUser } = matchedData(req);
 
-  let lastMessageId = await db.getLastestId();
-
-  messages.push({
-    id: ++lastMessageId,
-    text: messageText,
-    user: messageUser,
-    added: new Date(),
-  });
+  // add message to db
+  await insertMessage(messageText, messageUser);
 
   res.redirect("/");
 }
