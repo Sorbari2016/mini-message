@@ -4,6 +4,7 @@ import {
   getMessageById,
   insertMessage,
   updateUserMessage,
+  deleteMessageById,
 } from "../db/queries.js";
 import { validationResult, matchedData } from "express-validator";
 
@@ -109,17 +110,7 @@ async function updateMessage(req, res) {
 async function deleteMessage(req, res) {
   const messageId = parseInt(req.params["messageId"]);
 
-  const messages = await db.getMessages();
-
-  const messageIndex = messages.findIndex(
-    (message) => message.id === messageId,
-  );
-
-  if (messageIndex === -1) {
-    return res.status(404).send("Message not found");
-  }
-
-  messages.splice(messageIndex, 1);
+  await deleteMessageById(messageId);
   res.redirect("/");
 }
 

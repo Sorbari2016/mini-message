@@ -26,4 +26,14 @@ const updateUserMessage = async (messageId, messageText, username) => {
   );
 };
 
-export { getAllMessages, getMessageById, insertMessage, updateUserMessage };
+const deleteMessageById = async (messageId) => {
+  await pool.query("DELETE FROM messages WHERE id = $1", [messageId]);
+};
+
+export {
+  getAllMessages,
+  getMessageById,
+  insertMessage,
+  updateUserMessage,
+  deleteMessageById,
+};
