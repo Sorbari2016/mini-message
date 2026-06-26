@@ -15,7 +15,7 @@ router.get("/", getMessages);
 router.get("/new", getMessageForm);
 router.post("/new", validateMessage(), createMessage);
 router.get("/:messageId/edit", getMessageForm);
-router.post("/:messageId/edit", updateMessage);
+router.post("/:messageId/edit", validateMessage(), updateMessage);
 router.post("/:messageId/delete", deleteMessage);
 
 export { router };

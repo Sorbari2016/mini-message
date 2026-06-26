@@ -1,5 +1,10 @@
 import { CustomNotFoundError } from "../errors/customNotFoundError.js";
-import { getAllMessages, insertMessage } from "../db/queries.js";
+import {
+  getAllMessages,
+  getMessageById,
+  insertMessage,
+  updateUserMessage,
+} from "../db/queries.js";
 import { validationResult, matchedData } from "express-validator";
 
 // Create controller to get homepage, with all messages
@@ -26,8 +31,7 @@ async function getMessageForm(req, res) {
   }
 
   const messageId = parseInt(req.params["messageId"]);
-  const messages = await getAllMessages();
-  const message = messages.find((msg) => msg.id === messageId);
+  const message = await getMessageById(messageId);
 
   if (!message) {
     throw new CustomNotFoundError("Message not found !");
@@ -69,25 +73,34 @@ async function createMessage(req, res) {
 
 // Create a controller to update a message
 async function updateMessage(req, res) {
+  const errors = validationResult(req);
+
   const messageId = parseInt(req.params.messageId);
+  const message = await getMessageById(messageId);
 
-  const messages = await db.getMessages();
-
-  const messageIndex = messages.findIndex(
-    (message) => message.id === messageId,
-  );
-
-  if (messageIndex === -1) {
-    return res.status(404).send("Message not found");
+  if (!errors.isEmpty()) {
+    return res.status(400).render("form", {
+      title: "Edit Message Form",
+      formTitle: "Edit your message",
+      actionRoute: `/${message.id}/edit`,
+      submitText: "Update Message",
+      message: message,
+      errors: errors.array(),
+    });
   }
 
-  const { messageUser, messageText } = req.body;
-
-  messages[messageIndex] = {
-    ...messages[messageIndex],
-    user: messageUser,
-    text: messageText,
+  const { messageText, username } = matchedData(req);
+  const previousData = {
+    message_text: message.message_text,
+    username: message.username,
   };
+
+  // update message in db
+  await updateUserMessage(
+    messageId,
+    messageText || previousData.messageText,
+    username || previousData.username,
+  );
 
   res.redirect("/");
 }
