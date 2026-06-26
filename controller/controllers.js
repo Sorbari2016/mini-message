@@ -1,9 +1,9 @@
-import * as db from "../db.js";
 import { CustomNotFoundError } from "../errors/customNotFoundError.js";
+import { getAllMessages } from "../db/queries.js";
 
 // Create controller to get homepage, with all messages
 async function getMessages(req, res) {
-  const messages = await db.getMessages();
+  const messages = await getAllMessages();
 
   if (!messages.length) {
     throw new CustomNotFoundError("No message yet!");
