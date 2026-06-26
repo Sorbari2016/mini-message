@@ -25,7 +25,7 @@ async function getMessageForm(req, res) {
   }
 
   const messageId = parseInt(req.params["messageId"]);
-  const messages = await db.getMessages();
+  const messages = await getAllMessages();
   const message = messages.find((msg) => msg.id === messageId);
 
   if (!message) {
