@@ -27,7 +27,7 @@ async function getMessageForm(req, res) {
       formTitle: "Send a message",
       actionRoute: "/new",
       submitText: "Send Message",
-      message: { user: "", text: "" },
+      message: { message_text: "", username: "" },
     });
   }
 
@@ -58,7 +58,11 @@ async function createMessage(req, res) {
       formTitle: "Send a message",
       actionRoute: "/new",
       submitText: "Send Message",
-      message: { username: "", message_text: "" },
+      message: {
+        //  send back data that passed
+        username: req.body.username,
+        message_text: req.body.messageText,
+      },
       errors: errors.array(),
     });
   }
@@ -85,7 +89,10 @@ async function updateMessage(req, res) {
       formTitle: "Edit your message",
       actionRoute: `/${message.id}/edit`,
       submitText: "Update Message",
-      message: message,
+      message: {
+        message_text: req.body.messageText,
+        username: req.body.username,
+      },
       errors: errors.array(),
     });
   }
